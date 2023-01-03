@@ -33,28 +33,37 @@ const AddSucursal: React.FC = () => {
       Fax: sucursal.Fax,
       Order_numbers: sucursal.Order_numbers
     };
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 
-    SucursalService.create(data)
-      .then((response: any) => {
-        setSucursal({
-          Id: response.data.Id,
-          Name: response.data.Name,
-          Phone: response.data.Phone,
-          Address: response.data.Address,
-          Fax: response.data.Fax,
-          Order_numbers: response.data.Order_numbers,
-          Created_at: response.data.Created_at,
-          Deleted_at: response.data.Deleted_at,
-          Administrator_name: response.data.Administrator_name,
-          User_id: response.data.User_id
+fetch("https://localhost:44308/Branchs/CreatedBranch", {'method': 'POST',
+'headers': myHeaders,
+'body': JSON.stringify(data),
+'redirect': 'follow'})
+  .then(response => response.text())
+  .then(result => setSubmitted(true))
+  .catch(error => console.log('error', error));
+    // SucursalService.create(data)
+    //   .then((response: any) => {
+    //     setSucursal({
+    //       Id: response.data.Id,
+    //       Name: response.data.Name,
+    //       Phone: response.data.Phone,
+    //       Address: response.data.Address,
+    //       Fax: response.data.Fax,
+    //       Order_numbers: response.data.Order_numbers,
+    //       Created_at: response.data.Created_at,
+    //       Deleted_at: response.data.Deleted_at,
+    //       Administrator_name: response.data.Administrator_name,
+    //       User_id: response.data.User_id
 
-        });
-        setSubmitted(true);
-        console.log(response.data);
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
+    //     });
+    //     setSubmitted(true);
+    //     console.log(response.data);
+    //   })
+    //   .catch((e: Error) => {
+    //     console.log(e);
+    //   });
   };
 
   const newSucursal = () => {

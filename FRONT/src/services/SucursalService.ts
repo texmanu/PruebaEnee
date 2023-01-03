@@ -2,7 +2,7 @@ import http from "../http-common";
 import ISucursalData from "../types/Sucursal";
 
 const getAll = () => {
-  return http.get<ISucursalData>("/GetAllBranch");
+   return http.get<ISucursalData>("/GetAllBranch");
 };
 
 const get = (id: any) => {

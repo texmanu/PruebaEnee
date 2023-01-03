@@ -8,29 +8,33 @@ const Sucursal: React.FC = () => {
   let navigate = useNavigate();
 
   const initialSucursalState = {
-    Id: null,
-    Name: "",
-    Phone: "",
-    Address: "",
-    Fax: "",
-    Order_numbers: 0,
-    Created_at:null,
-    Deleted_at:null,
-    Administrator_name:"",
-    User_id:null
+    id: null,
+    name: "",
+    phone: "",
+    address: "",
+    fax: "",
+    order_numbers: 0,
+    created_at:null,
+    deleted_at:null,
+    administrator_name:"",
+    user_id:null
   };
   const [currentSucursal, setCurrentSucursal] = useState(initialSucursalState);
   const [message, setMessage] = useState<string>("");
 
   const getSucursal = (id: string) => {
-    SucursalService.get(id)
-      .then((response: any) => {
-        setCurrentSucursal(response.data);
-        console.log(response.data);
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
+    //SucursalService.get(id)
+    fetch("https://localhost:44308/Branchs/GetBranch/"+id, {'method':'get','redirect':'follow'})
+  .then(response => response.text())
+  .then(result => setCurrentSucursal(JSON.parse(result)))
+  .catch(error => console.log('error', error));
+      // .then((response: any) => {
+      //   setCurrentSucursal(response.data);
+      //   console.log(response.data);
+      // })
+      // .catch((e: Error) => {
+      //   console.log(e);
+      // });
   };
 
   useEffect(() => {
@@ -45,25 +49,40 @@ const Sucursal: React.FC = () => {
 
 
   const updateSucursal = () => {
-    SucursalService.update(currentSucursal, 1)
-      .then((response: any) => {
-        console.log(response.data);
-        setMessage("La sucursal se ha actualizado exitosamente!");
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+fetch("https://localhost:44308/Branchs/UpdateBranch", {'method': 'PUT',
+'headers': myHeaders,
+'body': JSON.stringify(currentSucursal),
+'redirect': 'follow'})
+  .then(response => response.text())
+  .then(result => setMessage("La sucursal se ha actualizado exitosamente!"))
+  .catch(error => console.log('error', error));
+    // SucursalService.update(currentSucursal, 1)
+    //   .then((response: any) => {
+    //     console.log(response.data);
+    //     setMessage("La sucursal se ha actualizado exitosamente!");
+    //   })
+    //   .catch((e: Error) => {
+    //     console.log(e);
+    //   });
   };
 
   const deleteSucursal = () => {
-    SucursalService.update2(currentSucursal.Id,1)
-      .then((response: any) => {
-        console.log(response.data);
-        navigate("/sucursales");
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
+    fetch("https://localhost:44308/Branchs/DeletedBranch?id="+currentSucursal.id+"&user_id=1", {'method': 'PUT',
+    'redirect': 'follow'})
+  .then(response => response.text())
+  .then(result => navigate("/sucursales"))
+  .catch(error => console.log('error', error));
+    // SucursalService.update2(currentSucursal.id,1)
+    //   .then((response: any) => {
+    //     console.log(response.data);
+    //     navigate("/sucursales");
+    //   })
+    //   .catch((e: Error) => {
+    //     console.log(e);
+    //   });
   };
 
   return (
@@ -73,70 +92,70 @@ const Sucursal: React.FC = () => {
           <h4>Sucursal</h4>
           <form>
             <div className="form-group">
-              <label htmlFor="Name">Nombre</label>
+              <label htmlFor="name">Nombre</label>
               <input
                 type="text"
                 className="form-control"
-                id="Name"
-                name="Name"
+                id="name"
+                name="name"
                 required
-                value={currentSucursal.Name}
+                value={currentSucursal.name}
                 onChange={handleInputChange}
               />
             </div>
             <div className="form-group">
-            <label htmlFor="Administrator_name">Nombre del Administrador</label>
+            <label htmlFor="administrator_name">Nombre del Administrador</label>
             <input
               type="text"
               className="form-control"
-              id="Administrator_name"
+              id="administrator_name"
               required
-              value={currentSucursal.Administrator_name}
+              value={currentSucursal.administrator_name}
               onChange={handleInputChange}
-              name="Administrator_name"
+              name="administrator_name"
             />
           </div>
             <div className="form-group">
-              <label htmlFor="Phone">Telefono</label>
+              <label htmlFor="phone">Telefono</label>
               <input
                 type="text"
                 className="form-control"
-                id="Phone"
-                name="Phone"
-                value={currentSucursal.Phone}
+                id="phone"
+                name="phone"
+                value={currentSucursal.phone}
                 onChange={handleInputChange}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="Address">Dirrecion</label>
+              <label htmlFor="address">Dirrecion</label>
               <input
                 type="text"
                 className="form-control"
-                id="Address"
-                name="Address"
-                value={currentSucursal.Address}
+                id="address"
+                name="address"
+                value={currentSucursal.address}
                 onChange={handleInputChange}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="Fax">Fax</label>
+              <label htmlFor="fax">Fax</label>
               <input
                 type="text"
                 className="form-control"
-                id="Fax"
-                name="Fax"
-                value={currentSucursal.Fax}
+                id="fax"
+                name="fax"
+                value={currentSucursal.fax}
                 onChange={handleInputChange}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="Order_numbers">Numero de Pedidos</label>
+              <label htmlFor="order_numbers">Numero de Pedidos</label>
               <input
                 type="number"
                 className="form-control"
-                id="Order_numbers"
-                name="Order_numbers"
-                value={currentSucursal.Order_numbers}
+                id="order_numbers"
+                name="order_numbers"
+                value={currentSucursal.order_numbers}
                 onChange={handleInputChange}
               />
             </div>
@@ -145,7 +164,7 @@ const Sucursal: React.FC = () => {
               <label>
                 <strong>Estado:</strong>
               </label>
-              {currentSucursal.Deleted_at==null ? "Activo" : "Inactivo"}
+              {currentSucursal.deleted_at==null ? "Activo" : "Inactivo"}
             </div>
           </form>
           <button className="badge badge-danger mr-2" onClick={deleteSucursal}>

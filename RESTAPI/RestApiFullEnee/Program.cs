@@ -16,15 +16,17 @@ builder.Services.AddSingleton(mySqlConfiguration);
 
 builder.Services.AddScoped<IBranch, BranchRepository>();
 
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:8081",
-                                "*");
-        });
+    options.AddPolicy(MyAllowSpecificOrigins,
+                          policy =>
+                          {
+                              policy.WithOrigins("http://localhost:8081",
+                                                  "*")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                          });
 });
 var app = builder.Build();
 
@@ -34,7 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors();
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 

@@ -21,13 +21,18 @@ const SucursalesList = (props:any) => {
   const retrieveSucursales = () => {
     
     SucursalService.getAll()
-      .then((response) => {
-        console.log(response)
-        setSucursales(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    
+    fetch("https://localhost:44308/Branchs/GetAllBranch", {'method':'get','redirect':'follow'})
+      .then(response => response.text())
+      .then(result =>  setSucursales(JSON.parse(result)))
+      .catch(error => console.log('error', error));
+      // .then((response) => {
+      //   console.log(response)
+      //   setSucursales(response);
+      // })
+      // .catch((e) => {
+      //   console.log(e);
+      // });
   };
 
   const refreshList = () => {
@@ -37,17 +42,14 @@ const SucursalesList = (props:any) => {
 
 
   const findByTitle = () => {
-    SucursalService.findByTitle(searchTitle)
-      .then((response) => {
-        setSucursales(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    fetch("https://localhost:44308/Branchs/FindBrach/"+searchTitle, {'method':'get','redirect':'follow'})
+  .then(response => response.text())
+  .then(result => setSucursales(JSON.parse(result)))
+  .catch(error => console.log('error', error));
   };
 
   const OpenSurcusal = (rowIndex: number) => {
-    const id = SucursalesRef.current[rowIndex].Id;
+    const id = SucursalesRef.current[rowIndex].id;
     
     nav("/sucursal/" + id);
   };
@@ -71,32 +73,44 @@ const SucursalesList = (props:any) => {
   const columns = useMemo(
     () => [
       {
-        Header: "Id",
-        accessor: "Id",
+        Header: "id",
+        accessor: "id",
       },
       {
         Header: "Nombre",
-        accessor: "Name",
+        accessor: "name",
       },
       {
         Header: "Telefomo",
-        accessor: "Phone",
+        accessor: "phone",
       },
       {
         Header: "Direccion",
-        accessor: "Address",
+        accessor: "address",
       },
       {
         Header: "Fax",
-        accessor: "Fax",
+        accessor: "fax",
       },
       {
         Header: "Pedidos",
-        accessor: "Order_numbers",
+        accessor: "order_numbers",
       },
       {
         Header: "Administrador",
-        accessor: "Administrator_name",
+        accessor: "administrator_name",
+      },
+      {
+        Header: "Creacion",
+        accessor: "created_at",
+      },
+      {
+        Header: "Eliminado",
+        accessor: "deleted_at",
+      },
+      {
+        Header: "Usuario Id",
+        accessor: "user_id",
       },
       {
         Header: "Acciones",
@@ -138,7 +152,7 @@ const SucursalesList = (props:any) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by title"
+            placeholder="Buscar por nombre o nombre del administrador"
             value={searchTitle}
             onChange={onChangeSearchTitle}
           />

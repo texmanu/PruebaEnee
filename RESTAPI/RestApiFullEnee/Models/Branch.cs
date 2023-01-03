@@ -12,7 +12,7 @@ namespace EneeWebApi.Models
         public string Name { get; set; }
         public string Administrator_name { get; set; }
         public string Phone { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
         public string? Fax { get; set; }
         public int? Order_numbers { get; set; }
         public DateTime? Created_at { get; set; }

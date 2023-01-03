@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
             return Ok(await _Branch.GetBranch(Id));
         }
         [HttpGet]
-        [Route("GetBranch/{Name}")]
+        [Route("FindBrach/{Name}")]
         public async Task<IActionResult> FindName(string Name)
         {
             return Ok(await _Branch.FindName(Name));
