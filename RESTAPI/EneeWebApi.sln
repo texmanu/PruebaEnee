@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApiFullEnee", "RestApiFullEnee\RestApiFullEnee.csproj", "{3D7BBE70-4022-40C6-8C23-93B43C0BD7CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D7BBE70-4022-40C6-8C23-93B43C0BD7CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D7BBE70-4022-40C6-8C23-93B43C0BD7CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D7BBE70-4022-40C6-8C23-93B43C0BD7CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D7BBE70-4022-40C6-8C23-93B43C0BD7CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99A157B9-3423-405D-83DA-7CCB41BFB575}
+	EndGlobalSection
+EndGlobal
